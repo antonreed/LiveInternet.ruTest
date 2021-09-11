@@ -13,17 +13,27 @@ public class ProfilePage {
         this.driver = driver;
     }
 
-    @FindBy(xpath = "//*[@class = \"userbar\"]//*[@class = \"username\"]")
+    @FindBy(xpath = "//*[@id = \"_li-panel\"]//*[@class = \"username\"]")
     private WebElement userMenu;
 
-    @FindBy(xpath = "//*[@class = \"userbar\"]//a[contains(text(), \"Написать\")]")
+    @FindBy(xpath = "//*[@id = \"_li-panel\"]//a[contains(text(), \"Написать\")]")
     private WebElement articleLink;
 
-    @FindBy(xpath = "//*[@class = \"userbar\"]//a[contains(text(), \"Выйти\")]")
-    private WebElement logoutButton;
+    @FindBy(xpath = "//*[@id = \"_li-panel\"]//a[contains(text(), \"Мой дневник\")]")
+    private WebElement diary;
 
+    @FindBy(xpath = "//*[@id = \"_li-panel\"]//a[contains(text(), \"Выйти\")]")
+    private WebElement logoutButton;
     public void clickArticleLink() {
         articleLink.click();
+    }
+
+    public void clickDiaryLink() {
+        diary.click();
+    }
+
+    public void clickUserMenu() {
+        userMenu.click();
     }
 
     public String getUserName() {
