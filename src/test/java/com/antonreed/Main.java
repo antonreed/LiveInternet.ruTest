@@ -25,10 +25,6 @@ public class Main {
         WebDriverManager.chromedriver().setup();
         driver = new ChromeDriver();
         wait = new WebDriverWait(driver, 5, 100);
-        loginPage = new LoginPage(driver);
-        profilePage = new ProfilePage(driver);
-        profileSettingsPage = new ProfileSettingsPage(driver);
-        journal = new Journal(driver);
 
         driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
         driver.get(ConfProperties.getProperty("startPage"));
@@ -37,10 +33,12 @@ public class Main {
     @Test
     @Order(1)
     public void login() {
-        loginPage.clickLoginLink();
-        loginPage.inputLogin(ConfProperties.getProperty("login"));
-        loginPage.inputPassword(ConfProperties.getProperty("password"));
-        loginPage.clickLoginButton();
+        new LoginPage(driver)
+                .clickLoginLink()
+                .inputLogin(ConfProperties.getProperty("login"))
+                .inputPassword(ConfProperties.getProperty("password"))
+                .clickLoginButton();
+
         wait.until(ExpectedConditions.titleIs(ConfProperties.getProperty("pageAfterLogin")));
         Assertions.assertEquals(ConfProperties.getProperty("pageAfterLogin"), driver.getTitle());
     }
@@ -48,14 +46,14 @@ public class Main {
     @Test
     @Order(2)
     public void createNewArticle() {
-        newArticle = new NewArticle(driver);
+        new ProfilePage(driver)
+                .clickArticleLink();
+        new NewArticle(driver)
+                .inputHeader("Удаление статьи")
+                .inputArticle("Старую статью удаляем с помощью ID статьи методом deleteArticle(), " +
+                        "теперь эта статья будет тут красоваться")
+                .clickPublishButton();
 
-        profilePage.clickArticleLink();
-        newArticle.inputHeader("Удаление статьи");
-        newArticle.inputArticle("Старую статью удаляем методом deleteArticle(), " +
-                "теперь эта статья будет тут красоваться");
-
-        newArticle.clickPublishButton();
         wait.until(ExpectedConditions.titleIs(ConfProperties.getProperty("pageAfterCreatingArticle")));
         Assertions.assertEquals(ConfProperties.getProperty("pageAfterCreatingArticle"), driver.getTitle());
     }
@@ -67,8 +65,9 @@ public class Main {
     иначе тест провален.
     */
     public void deleteArticle() {
-        profilePage.clickDiaryLink();
+        new ProfilePage(driver).clickDiaryLink();
 
+        journal = new Journal(driver);
         journal.enterTheArticle(ConfProperties.getProperty("postId"));
         Assertions.assertEquals(ConfProperties.getProperty("editPostPageTitle"), driver.getTitle());
         journal
@@ -80,8 +79,10 @@ public class Main {
     @Order(4)
     public void changeDiaryName() {
         driver.get(ConfProperties.getProperty("startPage"));
-        profilePage.clickUserMenu();
-        profileSettingsPage
+
+        new ProfilePage(driver)
+                .clickUserMenu();
+        new ProfileSettingsPage(driver)
                 .clickSettingsButton()
                 .inputDiaryTitle(ConfProperties.getProperty("diaryTitle"))
                 .clickSubmitButton();
@@ -89,6 +90,6 @@ public class Main {
 
     @AfterAll
     public static void happyEnd() {
-        //driver.quit();
+        driver.quit();
     }
 }

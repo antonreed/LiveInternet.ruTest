@@ -24,23 +24,23 @@ public class ProfilePage {
 
     @FindBy(xpath = "//*[@id = \"_li-panel\"]//a[contains(text(), \"Выйти\")]")
     private WebElement logoutButton;
-    public void clickArticleLink() {
+
+    public ProfilePage clickArticleLink() {
         articleLink.click();
+        return this;
     }
 
-    public void clickDiaryLink() {
+    public ProfilePage clickDiaryLink() {
         diary.click();
+        return this;
     }
 
-    public void clickUserMenu() {
+    public ProfilePage clickUserMenu() {
         userMenu.click();
+        return this;
     }
 
     public String getUserName() {
         return userMenu.getText();
-    }
-
-    public String getPageTitle() {
-        return driver.getTitle();
     }
 }

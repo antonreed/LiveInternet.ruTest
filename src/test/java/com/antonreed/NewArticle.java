@@ -25,17 +25,20 @@ public class NewArticle {
     @FindBy(xpath = "//*[@id=\"sendB1\"]")
     private WebElement publishButton;
 
-    public void inputHeader(String header) {
+    public NewArticle inputHeader(String header) {
         this.header.sendKeys(header);
+        return this;
     }
 
-    public void inputArticle(String article) {
+    public NewArticle inputArticle(String article) {
         this.article = driver.switchTo().frame(iFrame).findElement(By.tagName("body"));
         this.article.sendKeys(article);
         driver.switchTo().parentFrame();
+        return this;
     }
 
-    public void clickPublishButton() {
+    public NewArticle clickPublishButton() {
         publishButton.click();
+        return this;
     }
 }

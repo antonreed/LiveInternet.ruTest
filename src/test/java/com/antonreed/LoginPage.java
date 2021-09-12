@@ -25,19 +25,23 @@ public class LoginPage {
     @FindBy(xpath = "//form[@id = \"blog_login_form\"]//*[@value = \"Войти\"]")
     private WebElement loginButton;
 
-    public void inputLogin(String login) {
+    public LoginPage inputLogin(String login) {
         loginField.sendKeys(login);
+        return this;
     }
 
-    public void inputPassword(String password) {
+    public LoginPage inputPassword(String password) {
         passwordField.sendKeys(password);
+        return this;
     }
 
-    public void clickLoginLink() {
+    public LoginPage clickLoginLink() {
         loginLink.click();
+        return this;
     }
 
-    public void clickLoginButton() {
+    public LoginPage clickLoginButton() {
         loginButton.click();
+        return this;
     }
 }
