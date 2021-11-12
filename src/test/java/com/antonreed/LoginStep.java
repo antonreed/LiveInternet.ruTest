@@ -3,6 +3,6 @@ package com.antonreed;
 public class LoginStep {
 
     /*
-    Код Влада
+    Мой код
      */
 }
